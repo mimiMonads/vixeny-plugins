@@ -26,17 +26,16 @@ const test = <T extends TypeBoxElementArray>(f:T)=> (
 
         const name = plugins.getName(o)(sym)
 
-        const options = plugins.getOptions(p)(name) as {includes: (keyof T)[]}
+        const optionsFrom = plugins.getOptions(p)(name) as {includes: (keyof T)[]}
 
 
-        if (options){
-            const compiled = dataValidator.compile(Type.Object(f[options.includes[0]].scheme))
+        if (optionsFrom){
+            const position = f[optionsFrom.includes[0]]
+            const compiled = dataValidator.compile(Type.Object(position.scheme))
           
             return async (r: Request) =>  (
                 obj => {
-
-                    console.log(obj)
-                    return compiled( obj ) ? obj : null
+                    return compiled( obj ) ? { [optionsFrom.includes[0]] : obj} : null
                 }
             )(
                 await r.json()  as { [V in keyof T]: T[V]['scheme'] | null}
@@ -82,7 +81,7 @@ const serve = wrap(opt)()
             }
         },
         isAsync: true,
-        f: (ctx) => JSON.stringify(ctx.typebox?.key)
+        f: (ctx) => JSON.stringify(ctx.typebox)
     }).testRequests()
 
 
