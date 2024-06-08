@@ -1,58 +1,14 @@
 
-import { Ajv } from '@feathersjs/schema'
+import * as Avj from '@feathersjs/schema'
 import { plugins, wrap } from 'vixeny'
-import { Type , type ObjectOptions, type TProperties} from '@sinclair/typebox';
+import { Type } from '@sinclair/typebox';
+import * as TypeBox from '@sinclair/typebox';
+import * as Vixney from 'vixeny'
+import main from './src/avj/main.ts';
 
 
-
-const dataValidator = new Ajv()
-
-
-type TypeBoxElement<T extends TProperties> = {
-    type?: 'body'
-    scheme?: T,
-    options?: ObjectOptions
-}
-
-type TypeBoxElementArray = {[key: string]: TypeBoxElement<any>}
-
-const test = <T extends TypeBoxElementArray>(f:T)=> (
-    sym => plugins.type({
-    name: sym,
-    type: {} as {includes: (keyof T)[]},
-    options: f,
-    isAsync: true,
-    f: (o)=> (p)=> {
-
-        const name = plugins.getName(o)(sym)
-
-        const optionsFrom = plugins.getOptions(p)(name) as {includes: (keyof T)[]}
-
-
-        if (optionsFrom){
-            const position = f[optionsFrom.includes[0]]
-            const compiled = dataValidator.compile(Type.Object(position.scheme))
-          
-            return async (r: Request) =>  (
-                obj => {
-                    return compiled( obj ) ? { [optionsFrom.includes[0]] : obj} : null
-                }
-            )(
-                await r.json()  as { [V in keyof T]: T[V]['scheme'] | null}
-            )
-
-
-        }
-
-        throw new Error('For a compiled validator you must provide a scheme in /`plugins.[nameOfYourValidator]/`')
-
-    
-    }})
-)(
-    Symbol('TypeBox')
-)
-
-const a = test({
+const parser = main(Vixney)(Avj)(TypeBox)
+const bodyParser = parser({
     key: {
         scheme: {
             id: Type.Number(),
@@ -67,7 +23,7 @@ const a = test({
 
 const opt = plugins.globalOptions({
     cyclePlugin:{
-        typebox: a
+        typebox: bodyParser
     }
 })
 
@@ -84,17 +40,19 @@ const serve = wrap(opt)()
         f: (ctx) => JSON.stringify(ctx.typebox)
     }).testRequests()
 
+console.log(
+    await serve(
+        new Request('http://hihihi.com/hi', {
+            method: 'POST',
+            body: JSON.stringify({
+                id: 1,
+                text: "Hello, world!",
+                createdAt: Date.now(),
+                userId: 123
+                })
+        })
+    ).then( x => x.text())
+)
 
-    console.log(
-        await serve(
-            new Request('http://hihihi.com/hi', {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: 1,
-                    text: "Hello, world!",
-                    createdAt: Date.now(),
-                    userId: 123
-                  })
-            })
-        ).then( x => x.text())
-    )
+
+  
