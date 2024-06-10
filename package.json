@@ -2,15 +2,18 @@
   "name": "vixeny-plugins",
   "module": "index.ts",
   "type": "module",
+  "main": "main.ts",
+  "scripts": {
+    "testDeno": "deno test -A test/**/*.deno.test.ts",
+    "testBun": "bun test test/**/*.bun.test.ts"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@feathersjs/schema": "latest",
+    "@sinclair/typebox": "latest",
+    "vixeny": "0.1.30"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@feathersjs/typebox": "latest",
-    "@feathersjs/schema": "latest",
-    "vixeny": "latest"
+    "typescript": "latest"
   }
 }

@@ -1,0 +1,6 @@
+{
+    "imports": {
+      "vixeny": "https://deno.land/x/endofunctor@v0.1.30/main.ts"
+    }
+  }
+  
