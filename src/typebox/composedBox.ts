@@ -1,6 +1,6 @@
-import * as vix from "vixeny";
-import * as Avj from "@feathersjs/schema";
-import * as TypeBox from "@sinclair/typebox";
+import type * as vix from "vixeny";
+import type * as Avj from "@feathersjs/schema";
+import type * as TypeBox from "@sinclair/typebox";
 
 
 type TypeBoxElement<T extends TypeBox.TProperties> = {
@@ -17,7 +17,7 @@ type TypeBoxElementArray<K extends string> = {
 export default ({ plugins }: typeof vix) =>
 ({ Ajv }: typeof Avj) =>
 ({ Type }: typeof TypeBox) =>
-<T extends TypeBoxElementArray<any>>(f: T) =>
+<T extends TypeBoxElementArray<any>>(f: T)  =>
   (
     (sym) =>
       plugins.type({
@@ -55,6 +55,7 @@ export default ({ plugins }: typeof vix) =>
               Type.Object(position.scheme),
             );
 
+            
             return async (r: Request) =>
               (
                 (obj) => {
@@ -63,7 +64,7 @@ export default ({ plugins }: typeof vix) =>
                     | null;
                 }
               )(
-                await r.json() as { [V in keyof T]: T[V]["scheme"] },
+                await r.json() 
               );
           }
 
@@ -74,4 +75,4 @@ export default ({ plugins }: typeof vix) =>
       })
   )(
     Symbol("TypeBox"),
-  );
+  ) ;
