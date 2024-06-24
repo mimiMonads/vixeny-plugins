@@ -2,7 +2,6 @@ import type * as vix from "vixeny";
 import type * as Avj from "@feathersjs/schema";
 import type * as TypeBox from "@sinclair/typebox";
 
-
 type TypeBoxElement<T extends TypeBox.TProperties> = {
   readonly type?: "body";
   readonly scheme?: T;
@@ -17,7 +16,7 @@ type TypeBoxElementArray<K extends string> = {
 export default ({ plugins }: typeof vix) =>
 ({ Ajv }: typeof Avj) =>
 ({ Type }: typeof TypeBox) =>
-<T extends TypeBoxElementArray<any>>(f: T)  =>
+<T extends TypeBoxElementArray<any>>(f: T) =>
   (
     (sym) =>
       plugins.type({
@@ -33,7 +32,7 @@ export default ({ plugins }: typeof vix) =>
           };
           const isUsing = plugins.pluginIsUsing(p)(name);
 
-          // Getting the currrent options with 
+          // Getting the currrent options with
           const elements = optionsFrom?.includes ?? isUsing ?? null;
 
           if (elements === null) {
@@ -44,8 +43,7 @@ export default ({ plugins }: typeof vix) =>
             );
           }
 
-    
-          if (Array.isArray(elements)  && elements.length === 1) {
+          if (Array.isArray(elements) && elements.length === 1) {
             const elements = optionsFrom?.includes[0] ?? isUsing![0];
             const dataValidator = new Ajv();
             const position = f[elements];
@@ -55,7 +53,6 @@ export default ({ plugins }: typeof vix) =>
               Type.Object(position.scheme),
             );
 
-            
             return async (r: Request) =>
               (
                 (obj) => {
@@ -64,7 +61,7 @@ export default ({ plugins }: typeof vix) =>
                     | null;
                 }
               )(
-                await r.json() 
+                await r.json(),
               );
           }
 
@@ -75,4 +72,4 @@ export default ({ plugins }: typeof vix) =>
       })
   )(
     Symbol("TypeBox"),
-  ) ;
+  );

@@ -41,7 +41,7 @@ Deno.test("Validate schema with valid data", async () => {
     id: 10,
     text: "Sample text",
     createdAt: Date.now(),
-    userId: 50
+    userId: 50,
   };
 
   const response = await serve(
@@ -51,7 +51,7 @@ Deno.test("Validate schema with valid data", async () => {
     }),
   );
   const body = await response.text();
-  
+
   // Since the input is valid, expect the same JSON to be returned
   assertEquals(body, JSON.stringify(validData));
 });
@@ -61,7 +61,7 @@ Deno.test("Reject invalid schema data", async () => {
     id: "not-a-number", // Invalid type
     text: "Sample text",
     createdAt: "not-a-timestamp", // Invalid type
-    userId: 50
+    userId: 50,
   };
 
   const response = await serve(
@@ -70,11 +70,11 @@ Deno.test("Reject invalid schema data", async () => {
       body: JSON.stringify(invalidData),
     }),
   );
-  
+
   const body = await response.text();
 
   // This depends on the implementation of your error handling
-  assertEquals(body, ''); // Customize based on your error messages
+  assertEquals(body, ""); // Customize based on your error messages
 });
 
 Deno.test("Asynchronous route handling", async () => {
@@ -82,7 +82,7 @@ Deno.test("Asynchronous route handling", async () => {
     id: 2,
     text: "Hello, Async!",
     createdAt: Date.now(),
-    userId: 200
+    userId: 200,
   };
 
   const response = await serve(
@@ -92,7 +92,7 @@ Deno.test("Asynchronous route handling", async () => {
     }),
   );
   const body = await response.text();
-  
+
   // Confirm that the asynchronous route returns the correct JSON response
   assertEquals(body, JSON.stringify(requestData));
 });

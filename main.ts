@@ -1,5 +1,5 @@
-import composedBox from './src/typebox/composedBox.ts'
+import composedBox from "./src/typebox/composedBox.ts";
 
 export const typeBox = {
-    composedBox: composedBox 
-} 
+  composedBox: composedBox,
+};

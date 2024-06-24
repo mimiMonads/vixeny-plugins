@@ -37,41 +37,38 @@ const serveMock = wrap(opt)()
   }).testRequests();
 
 test("Validate schema with valid data", async () => {
-    const validData = {
-      id: 10,
-      text: "Sample text",
-      createdAt: Date.now(),
-      userId: 50
-    };
-  
-    const request = new Request("http://hihihi.com/hi", {
-      method: "POST",
-      body: JSON.stringify(validData)
-    });
-    
-    const response = await serveMock(request);
-    const body = await response.text();
-    expect(body).toBe(JSON.stringify(validData))
+  const validData = {
+    id: 10,
+    text: "Sample text",
+    createdAt: Date.now(),
+    userId: 50,
+  };
+
+  const request = new Request("http://hihihi.com/hi", {
+    method: "POST",
+    body: JSON.stringify(validData),
   });
-  
-  test("Reject invalid schema data", async () => {
-    const invalidData = {
-      id: "not-a-number",
-      text: "Sample text",
-      createdAt: "not-a-timestamp",
-      userId: 50
-    };
-  
-    const request = new Request("http://hihihi.com/hi", {
-      method: "POST",
-      body: JSON.stringify(invalidData)
-    });
-    
-    const response = await serveMock(request);
-    const body = await response.text();
-    
-    expect(body).toBe('')
-    
-  
+
+  const response = await serveMock(request);
+  const body = await response.text();
+  expect(body).toBe(JSON.stringify(validData));
+});
+
+test("Reject invalid schema data", async () => {
+  const invalidData = {
+    id: "not-a-number",
+    text: "Sample text",
+    createdAt: "not-a-timestamp",
+    userId: 50,
+  };
+
+  const request = new Request("http://hihihi.com/hi", {
+    method: "POST",
+    body: JSON.stringify(invalidData),
   });
-  
+
+  const response = await serveMock(request);
+  const body = await response.text();
+
+  expect(body).toBe("");
+});

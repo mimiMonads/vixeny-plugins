@@ -3,7 +3,6 @@
   "version": "0.0.2",
   "exports": "./main.ts",
   "imports": {
-    "vixeny": "jsr:@vixeny/core@0.1.30"
+    "vixeny": "jsr:@vixeny/core@0.1.40"
   }
 }
-  
