@@ -32,7 +32,6 @@ const serve = wrap(opt)()
   .stdPetition({
     path: "/hi",
     method: "POST",
-    isAsync: true,
     f: ({ typebox }) => JSON.stringify(typebox?.key),
   }).testRequests();
 

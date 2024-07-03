@@ -12,7 +12,7 @@
     "@types/bun": "latest",
     "@feathersjs/schema": "latest",
     "@sinclair/typebox": "latest",
-    "vixeny": "0.1.30"
+    "vixeny": "0.1.42"
   },
   "peerDependencies": {
     "typescript": "latest"

@@ -3,13 +3,13 @@ import * as Avj from "@feathersjs/schema";
 import { plugins, wrap } from "vixeny";
 import * as TypeBox from "@sinclair/typebox";
 import * as Vixney from "vixeny";
-import main from "../../src/typebox/composedBox.ts";
+import { typeBox } from "../../main.ts";
 
 const {
   Type,
 } = TypeBox;
 
-const parser = main(Vixney)(Avj)(TypeBox);
+const parser = typeBox.composedBox(Vixney)(Avj)(TypeBox);
 const bodyParser = parser({
   key: {
     scheme: {
@@ -32,7 +32,6 @@ const serveMock = wrap(opt)()
   .stdPetition({
     path: "/hi",
     method: "POST",
-    isAsync: true,
     f: ({ typebox }) => JSON.stringify(typebox?.key),
   }).testRequests();
 
