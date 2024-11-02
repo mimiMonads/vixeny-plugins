@@ -1,8 +1,8 @@
 {
   "name": "@vixeny/plugins",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "exports": "./main.ts",
   "imports": {
-    "vixeny": "jsr:@vixeny/core@0.1.42"
+    "vixeny": "jsr:@vixeny/core@0.1.49"
   }
 }

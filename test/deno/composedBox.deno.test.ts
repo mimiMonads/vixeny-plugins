@@ -1,15 +1,19 @@
 import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import * as Avj from "@feathersjs/schema";
 import { plugins, wrap } from "vixeny";
 import * as TypeBox from "@sinclair/typebox";
-import * as Vixney from "vixeny";
+import { TypeCompiler } from '@sinclair/typebox/compiler'
 import main from "../../src/typebox/composedBox.ts";
 
 const {
   Type,
 } = TypeBox;
 
-const parser = main(Vixney)(Avj)(TypeBox);
+const parser = main({
+  plugins,
+  TypeCompiler,
+  TypeBox,
+});
+
 const bodyParser = parser({
   key: {
     scheme: {
@@ -90,6 +94,8 @@ Deno.test("Asynchronous route handling", async () => {
       body: JSON.stringify(requestData),
     }),
   );
+
+
   const body = await response.text();
 
   // Confirm that the asynchronous route returns the correct JSON response

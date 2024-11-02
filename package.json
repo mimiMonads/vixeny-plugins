@@ -1,6 +1,6 @@
 {
   "name": "vixeny-plugins",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "module": "index.ts",
   "type": "module",
   "main": "main.ts",
@@ -12,7 +12,7 @@
     "@types/bun": "latest",
     "@feathersjs/schema": "latest",
     "@sinclair/typebox": "latest",
-    "vixeny": "0.1.42"
+    "vixeny": "0.1.49"
   },
   "peerDependencies": {
     "typescript": "latest"

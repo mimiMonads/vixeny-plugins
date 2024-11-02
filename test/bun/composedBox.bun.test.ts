@@ -1,15 +1,18 @@
 import { expect, test } from "bun:test";
-import * as Avj from "@feathersjs/schema";
 import { plugins, wrap } from "vixeny";
 import * as TypeBox from "@sinclair/typebox";
-import * as Vixney from "vixeny";
-import { typeBox } from "../../main.ts";
-
+import { TypeCompiler } from '@sinclair/typebox/compiler'
+import main from "../../src/typebox/composedBox.ts";
 const {
   Type,
 } = TypeBox;
 
-const parser = typeBox.composedBox(Vixney)(Avj)(TypeBox);
+const parser = main({
+  plugins,
+  TypeCompiler,
+  TypeBox,
+});
+
 const bodyParser = parser({
   key: {
     scheme: {
@@ -33,7 +36,8 @@ const serveMock = wrap(opt)()
     path: "/hi",
     method: "POST",
     f: ({ typebox }) => JSON.stringify(typebox?.key),
-  }).testRequests();
+  })
+  .testRequests();
 
 test("Validate schema with valid data", async () => {
   const validData = {
