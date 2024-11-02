@@ -1,14 +1,14 @@
 import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
 import { plugins, wrap } from "vixeny";
 import * as TypeBox from "@sinclair/typebox";
-import { TypeCompiler } from '@sinclair/typebox/compiler'
-import main from "../../src/typebox/composedBox.ts";
+import { TypeCompiler } from "@sinclair/typebox/compiler";
+import { body } from "../../src/typebox/composedBox.ts";
 
 const {
   Type,
 } = TypeBox;
 
-const parser = main({
+const parser = body({
   plugins,
   TypeCompiler,
   TypeBox,
@@ -94,7 +94,6 @@ Deno.test("Asynchronous route handling", async () => {
       body: JSON.stringify(requestData),
     }),
   );
-
 
   const body = await response.text();
 

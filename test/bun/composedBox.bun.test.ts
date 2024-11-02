@@ -1,13 +1,13 @@
 import { expect, test } from "bun:test";
 import { plugins, wrap } from "vixeny";
 import * as TypeBox from "@sinclair/typebox";
-import { TypeCompiler } from '@sinclair/typebox/compiler'
-import main from "../../src/typebox/composedBox.ts";
+import { TypeCompiler } from "@sinclair/typebox/compiler";
+import { body } from "../../src/typebox/composedBox.ts";
 const {
   Type,
 } = TypeBox;
 
-const parser = main({
+const parser = body({
   plugins,
   TypeCompiler,
   TypeBox,
