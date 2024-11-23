@@ -36,7 +36,7 @@ const body = (args: {
     options: f,
     isFunction: false,
     isAsync: true,
-    f: (ctx) => {
+    f: async (ctx) => {
       // Getting all the respective values from options and petition
 
       const name = ctx.currentName(nameOfThePlugin);

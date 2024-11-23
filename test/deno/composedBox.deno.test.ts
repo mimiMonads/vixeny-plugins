@@ -32,7 +32,7 @@ const opt = plugins.globalOptions({
   },
 });
 
-const serve = wrap(opt)()
+const serve = await wrap(opt)()
   .stdPetition({
     path: "/hi",
     method: "POST",
